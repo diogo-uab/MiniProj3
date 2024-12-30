@@ -1,0 +1,331 @@
+{
+	"info": {
+		"_postman_id": "4e4bc3f2-3680-4608-a851-8dc52ee816b5",
+		"name": "Animalec",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "4573750"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"admin\",\r\n    \"password\": \"admin\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{ANIMALEC_BASE_URL}}/auth",
+					"host": [
+						"{{ANIMALEC_BASE_URL}}"
+					],
+					"path": [
+						"auth"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Sponsors",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{ANIMALEC_BASE_URL}}/sponsors",
+					"host": [
+						"{{ANIMALEC_BASE_URL}}"
+					],
+					"path": [
+						"sponsors"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Sponsor",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Bruce Wayne\",\r\n    \"animal\": \"63714f6b6ab64d00042dd042\",\r\n    \"photo\": \"https://upload.wikimedia.org/wikipedia/pt/8/8d/Batman_por_Jim_Lee.jpg\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{ANIMALEC_BASE_URL}}/sponsors",
+					"host": [
+						"{{ANIMALEC_BASE_URL}}"
+					],
+					"path": [
+						"sponsors"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Sponsor by ID",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{ANIMALEC_BASE_URL}}/sponsors/:id",
+					"host": [
+						"{{ANIMALEC_BASE_URL}}"
+					],
+					"path": [
+						"sponsors",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "67489c3f2e5943abcb885810"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Sponsor",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"_id\": \"67489c3f2e5943abcb885810\",\r\n    \"name\": \"Bruce Wayne\",\r\n    \"animal\": \"63714f6b6ab64d00042dd042\",\r\n    \"photo\": \"https://upload.wikimedia.org/wikipedia/pt/8/8d/Batman_por_Jim_Lee.jpg\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{ANIMALEC_BASE_URL}}/sponsors/:id",
+					"host": [
+						"{{ANIMALEC_BASE_URL}}"
+					],
+					"path": [
+						"sponsors",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "67489c3f2e5943abcb885810"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Sponsor",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{ANIMALEC_BASE_URL}}/sponsors/:id",
+					"host": [
+						"{{ANIMALEC_BASE_URL}}"
+					],
+					"path": [
+						"sponsors",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "67489c3f2e5943abcb885810"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Experts",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{ANIMALEC_BASE_URL}}/experts",
+					"host": [
+						"{{ANIMALEC_BASE_URL}}"
+					],
+					"path": [
+						"experts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Expert",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Expert Name\",\r\n    \"expertise\": \"ave\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{ANIMALEC_BASE_URL}}/experts",
+					"host": [
+						"{{ANIMALEC_BASE_URL}}"
+					],
+					"path": [
+						"experts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Expert by ID",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{ANIMALEC_BASE_URL}}/experts/:id",
+					"host": [
+						"{{ANIMALEC_BASE_URL}}"
+					],
+					"path": [
+						"experts",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "67489c432e5943abcb885811"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Expert",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"_id\": \"67489c432e5943abcb885811\",\r\n    \"name\": \"New Expert Name\",\r\n    \"expertise\": \"ave\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{ANIMALEC_BASE_URL}}/experts/:id",
+					"host": [
+						"{{ANIMALEC_BASE_URL}}"
+					],
+					"path": [
+						"experts",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "67489c432e5943abcb885811"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Expert",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{ANIMALEC_BASE_URL}}/experts/:id",
+					"host": [
+						"{{ANIMALEC_BASE_URL}}"
+					],
+					"path": [
+						"experts",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "67489c432e5943abcb885811"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "apikey",
+		"apikey": [
+			{
+				"key": "value",
+				"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwayI6InA0dXVycGc0NnI2MzZmYzYxNjkwZjVkZDAwMDRjN2RiNTciLCJpYXQiOjE3MzUzNjAwNTksImV4cCI6MTczNTM3NTA1OSwiaXNzIjoiRkNBIn0.a0_NJkzYVnj_NwQ5S51c7GWLpvELWqrUeVD3aLAZ-Ds",
+				"type": "string"
+			},
+			{
+				"key": "key",
+				"value": "Authorization",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "ANIMALEC_BASE_URL",
+			"value": "http://localhost:8080",
+			"type": "string"
+		}
+	]
+}
