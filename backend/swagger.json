@@ -1,0 +1,975 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Animalec API",
+    "description": "This is the Animalec API, documenting the new Experts and Sponsor entities endpoints.\n\nSource code is available on the GitHub repo [diogo-uab/MiniProj3](https://github.com/diogo-uab/MiniProj3).",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8080"
+    }
+  ],
+  "tags": [
+    {
+      "name": "auth",
+      "description": "Authentication endpoint"
+    },
+    {
+      "name": "experts",
+      "description": "Manage Experts"
+    },
+    {
+      "name": "sponsors",
+      "description": "Manage Sponsors"
+    }
+  ],
+  "paths": {
+    "/auth": {
+      "post": {
+        "tags": [
+          "auth"
+        ],
+        "summary": "Authenticate user",
+        "operationId": "auth",
+        "requestBody": {
+          "description": "Authentication payload",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "username": {
+                    "type": "string",
+                    "example": "admin"
+                  },
+                  "password": {
+                    "type": "string",
+                    "format": "password",
+                    "example": "admin"
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "headers": {
+              "authorization": {
+                "schema": {
+                  "type": "string",
+                  "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwayI6InA0dXVycGc0NnI2MzZmYzYxNjkwZjVkZDAwMDRjN2RiNTciLCJpYXQiOjE3MzQ3MTg5NjAsImV4cCI6MTczNDczMzk2MCwiaXNzIjoiRkNBIn0.yS7IN9lA4BMQeFI-kTrUdTldczNv7R7RdWRjr3MK8Wc"
+                },
+                "description": "The JWT Authorization Token"
+              }
+            }
+          },
+          "403": {
+            "description": "Wrong username and password combination",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BaseApiResponse"
+                }
+              }
+            }
+          },
+          "406": {
+            "description": "Invalid request body",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationErrorApiResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/experts": {
+      "get": {
+        "tags": [
+          "experts"
+        ],
+        "summary": "Get all experts",
+        "operationId": "getExperts",
+        "responses": {
+          "200": {
+            "description": "List of all experts",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/BaseApiResponse"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "body": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/Expert"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BaseApiResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "animalec_auth": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "experts"
+        ],
+        "summary": "Create expert",
+        "operationId": "createExperts",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/CreateExpert"
+        },
+        "responses": {
+          "201": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/BaseApiResponse"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "body": {
+                          "$ref": "#/components/schemas/Expert"
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BaseApiResponse"
+                }
+              }
+            }
+          },
+          "406": {
+            "description": "Invalid request body",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationErrorApiResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "animalec_auth": []
+          }
+        ]
+      }
+    },
+    "/experts/{expertId}": {
+      "get": {
+        "tags": [
+          "experts"
+        ],
+        "summary": "Find expert by id",
+        "operationId": "getExpertById",
+        "parameters": [
+          {
+            "name": "expertId",
+            "in": "path",
+            "description": "ID of the expert to update",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "67489c432e5943abcb885811"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/BaseApiResponse"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "body": {
+                          "$ref": "#/components/schemas/Expert"
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BaseApiResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Expert not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BaseApiResponse"
+                }
+              }
+            }
+          },
+          "406": {
+            "description": "Invalid request param",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationErrorApiResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "animalec_auth": []
+          }
+        ]
+      },
+      "put": {
+        "tags": [
+          "experts"
+        ],
+        "summary": "Updates an expert",
+        "operationId": "updateExpert",
+        "parameters": [
+          {
+            "name": "expertId",
+            "in": "path",
+            "description": "ID of the expert to update",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "67489c432e5943abcb885811"
+            }
+          }
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/UpdateExpert"
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/BaseApiResponse"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "body": {
+                          "$ref": "#/components/schemas/Expert"
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BaseApiResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Expert not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BaseApiResponse"
+                }
+              }
+            }
+          },
+          "406": {
+            "description": "Invalid request body or param",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationErrorApiResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "animalec_auth": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "experts"
+        ],
+        "summary": "Deletes an expert",
+        "operationId": "deleteExpert",
+        "parameters": [
+          {
+            "name": "expertId",
+            "in": "path",
+            "description": "ID of the expert to delete",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "67489c432e5943abcb885811"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BaseApiResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BaseApiResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Expert not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BaseApiResponse"
+                }
+              }
+            }
+          },
+          "406": {
+            "description": "Invalid request param",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationErrorApiResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "animalec_auth": []
+          }
+        ]
+      }
+    },
+    "/sponsors": {
+      "get": {
+        "tags": [
+          "sponsors"
+        ],
+        "summary": "Get all sponsors",
+        "operationId": "getSponsors",
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/BaseApiResponse"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "body": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/Sponsor"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BaseApiResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "animalec_auth": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "sponsors"
+        ],
+        "summary": "Create sponsor",
+        "operationId": "createSponsor",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/CreateSponsor"
+        },
+        "responses": {
+          "201": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/BaseApiResponse"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "body": {
+                          "$ref": "#/components/schemas/Sponsor"
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BaseApiResponse"
+                }
+              }
+            }
+          },
+          "406": {
+            "description": "Invalid request body",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationErrorApiResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "animalec_auth": []
+          }
+        ]
+      }
+    },
+    "/sponsors/{sponsorId}": {
+      "get": {
+        "tags": [
+          "sponsors"
+        ],
+        "summary": "Find sponsor by id",
+        "operationId": "getSponsorById",
+        "parameters": [
+          {
+            "name": "sponsorId",
+            "in": "path",
+            "description": "ID of the sponsor to update",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "67489c432e5943abcb885811"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/BaseApiResponse"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "body": {
+                          "$ref": "#/components/schemas/Sponsor"
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BaseApiResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Sponsor not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BaseApiResponse"
+                }
+              }
+            }
+          },
+          "406": {
+            "description": "Invalid request param",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationErrorApiResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "animalec_auth": []
+          }
+        ]
+      },
+      "put": {
+        "tags": [
+          "sponsors"
+        ],
+        "summary": "Updates a sponsor",
+        "operationId": "updateSponsor",
+        "parameters": [
+          {
+            "name": "sponsorId",
+            "in": "path",
+            "description": "ID of the sponsor to update",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "67489c432e5943abcb885811"
+            }
+          }
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/UpdateSponsor"
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/BaseApiResponse"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "body": {
+                          "$ref": "#/components/schemas/Sponsor"
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BaseApiResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Sponsor not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BaseApiResponse"
+                }
+              }
+            }
+          },
+          "406": {
+            "description": "Invalid request body or param",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationErrorApiResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "animalec_auth": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "sponsors"
+        ],
+        "summary": "Deletes a sponsor",
+        "operationId": "deleteSponsor",
+        "parameters": [
+          {
+            "name": "sponsorId",
+            "in": "path",
+            "description": "ID of the sponsor to delete",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "67489c432e5943abcb885811"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BaseApiResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BaseApiResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Sponsor not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BaseApiResponse"
+                }
+              }
+            }
+          },
+          "406": {
+            "description": "Invalid request param",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationErrorApiResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "animalec_auth": []
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Animal": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string",
+            "example": "63714f6b6ab64d00042dd042"
+          },
+          "name": {
+            "type": "string",
+            "example": "Cão"
+          }
+        }
+      },
+      "Expert": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string",
+            "example": "63714f6b6ab64d00042dd042"
+          },
+          "name": {
+            "type": "string",
+            "example": "John Doe"
+          },
+          "expertise": {
+            "type": "string",
+            "enum": [
+              "anfibio",
+              "ave",
+              "mamifero",
+              "peixe",
+              "reptil"
+            ]
+          }
+        }
+      },
+      "Sponsor": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string",
+            "example": "63714f6b6ab64d00042dd042"
+          },
+          "name": {
+            "type": "string",
+            "example": "John Doe"
+          },
+          "photo": {
+            "type": "string",
+            "format": "uri",
+            "example": "https://upload.wikimedia.org/wikipedia/pt/8/8d/Batman_por_Jim_Lee.jpg"
+          },
+          "animal": {
+            "$ref": "#/components/schemas/Animal"
+          }
+        }
+      },
+      "BaseApiResponse": {
+        "type": "object",
+        "properties": {
+          "http": {
+            "type": "integer",
+            "minimum": 100,
+            "maximum": 599,
+            "example": 401
+          },
+          "code": {
+            "type": "string",
+            "example": "InvalidToken"
+          },
+          "type": {
+            "type": "string",
+            "example": "error"
+          }
+        }
+      },
+      "ValidationErrorApiResponse": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "msg": {
+              "type": "string",
+              "example": "Invalid value"
+            },
+            "param": {
+              "type": "string",
+              "example": "name"
+            },
+            "location": {
+              "type": "string",
+              "example": "body"
+            }
+          }
+        }
+      }
+    },
+    "requestBodies": {
+      "CreateExpert": {
+        "description": "Expert object to be created",
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "required": [
+                "name",
+                "expertise"
+              ],
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "example": "John Doe"
+                },
+                "expertise": {
+                  "type": "string",
+                  "enum": [
+                    "anfibio",
+                    "ave",
+                    "mamifero",
+                    "peixe",
+                    "reptil"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      },
+      "UpdateExpert": {
+        "description": "Expert object to be updated",
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Expert"
+            }
+          }
+        }
+      },
+      "CreateSponsor": {
+        "description": "Sponsor object to be created",
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "example": "John Doe"
+                },
+                "photo": {
+                  "type": "string",
+                  "format": "uri",
+                  "example": "https://upload.wikimedia.org/wikipedia/pt/8/8d/Batman_por_Jim_Lee.jpg"
+                },
+                "animal": {
+                  "type": "string",
+                  "example": "63714f6b6ab64d00042dd042"
+                }
+              }
+            }
+          }
+        }
+      },
+      "UpdateSponsor": {
+        "description": "Sponsor object to be updated",
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "_id": {
+                  "type": "string",
+                  "example": "63714f6b6ab64d00042dd042"
+                },
+                "name": {
+                  "type": "string",
+                  "example": "John Doe"
+                },
+                "photo": {
+                  "type": "string",
+                  "format": "uri",
+                  "example": "https://upload.wikimedia.org/wikipedia/pt/8/8d/Batman_por_Jim_Lee.jpg"
+                },
+                "animal": {
+                  "type": "string",
+                  "example": "63714f6b6ab64d00042dd042"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "animalec_auth": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "Authorization"
+      }
+    }
+  }
+}
